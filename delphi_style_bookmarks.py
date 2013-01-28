@@ -3,7 +3,9 @@ import sublime, sublime_plugin
 markPreffix = "delphi_style_bookmark_"
 
 class SetDelphiBookmarkCommand(sublime_plugin.TextCommand):
-   def run(self, edit, key, icon='bookmark'):
+   def run(self, edit, key):
+
+      icon = '../Delphi Style Bookmarks/icons/'+ str(key)
 
       markId = markPreffix + str(key)
 
@@ -11,7 +13,7 @@ class SetDelphiBookmarkCommand(sublime_plugin.TextCommand):
 
          mark = self.view.sel()[0]
 
-         for i in range(9):
+         for i in range(10):
             regions = self.view.get_regions(markPreffix+str(i))
 
             if len(regions) == 0:
@@ -19,13 +21,11 @@ class SetDelphiBookmarkCommand(sublime_plugin.TextCommand):
 
             m = regions[0]
 
-            if mark.intersects(m):
+            if self.adapt_region(mark).intersects(self.adapt_region(m)):
                self.view.erase_regions(markPreffix+str(i))
 
                if i == key:
                   return
-
-         mark = self.adapt_region(mark)
 
          self.view.add_regions(markId,
                                [mark],
