@@ -5,7 +5,7 @@ markPreffix = "delphi_style_bookmark_"
 class SetDelphiBookmarkCommand(sublime_plugin.TextCommand):
    def run(self, edit, key):
 
-      icon = '../Delphi Style Bookmarks/icons/'+ str(key)
+      icon = '../Delphi Style Bookmarks/icons/'+str(key) if int(sublime.version()) < 3000 else 'Packages/Delphi Style Bookmarks/icons/'+str(key)+'.png'
 
       markId = markPreffix + str(key)
 
